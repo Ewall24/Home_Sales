@@ -26,9 +26,21 @@ findspark.init()
 
     Answer the following questions using SparkSQL:
 
-        What is the average price for a four-bedroom house sold for each year? Round off your answer to two decimal places.
+        # 3. What is the average price for a four bedroom house sold per year, rounded to two decimal places?
+avg_price_4_bedroom = spark.sql("""
+    SELECT YEAR(date) AS year, ROUND(AVG(price), 2) AS avg_price
+    FROM home_sales
+    WHERE bedrooms = 4
+    GROUP BY year
+    ORDER BY year
+""")
+avg_price_4_bedroom.show()
 
-        
+![firefox_5sMbM8xvC0](https://github.com/user-attachments/assets/e9484c0d-4f7e-444d-a66a-77dca3726d65)
+
+
+
+
 
        # 3. What is the average price for a four bedroom house sold per year, rounded to two decimal places?
 avg_price_4_bedroom = spark.sql("""
