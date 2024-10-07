@@ -56,7 +56,7 @@ avg_price_4_bedroom.show()
 
 
         # 4. What is the average price of a home for each year the home was built,
-# that have 3 bedrooms and 3 bathrooms, rounded to two decimal places?
+        # that have 3 bedrooms and 3 bathrooms, rounded to two decimal places?
 avg_price_3_bed_3_bath = spark.sql("""
     SELECT date_built, ROUND(AVG(price), 2) AS avg_price
     FROM home_sales
@@ -68,12 +68,7 @@ avg_price_3_bed_3_bath.show()
 ![image](https://github.com/user-attachments/assets/1ffb0602-42bc-43df-8899-f7727d3aa3d1)
 
 
- 
-
-
-        
-
-        # 6. What is the average price of a home per "view" rating, rounded to two decimal places,
+    # 6. What is the average price of a home per "view" rating, rounded to two decimal places,
 # having an average home price greater than or equal to $350,000? Order by descending view rating.
 # Although this is a small dataset, determine the run time for this query.
 
@@ -94,7 +89,7 @@ print("--- %s seconds ---" % (time.time() - start_time))
     # 7. Cache the the temporary table home_sales.
 spark.catalog.cacheTable("home_sales")
 
-# 8. Check if the table is cached.
+    # 8. Check if the table is cached.
 spark.catalog.isCached('home_sales')
  
     Using the cached data, run the last query that calculates the average price of a home per "view" rating having an average home price greater than or equal to $350,000. Determine the runtime and compare it to uncached runtime.
