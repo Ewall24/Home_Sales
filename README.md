@@ -69,8 +69,8 @@ avg_price_3_bed_3_bath.show()
 
 
     # 6. What is the average price of a home per "view" rating, rounded to two decimal places,
-# having an average home price greater than or equal to $350,000? Order by descending view rating.
-# Although this is a small dataset, determine the run time for this query.
+    # having an average home price greater than or equal to $350,000? Order by descending view rating.
+    # Although this is a small dataset, determine the run time for this query.
 
 avg_price_view = spark.sql("""
     SELECT view, ROUND(AVG(price), 2) AS avg_price
@@ -86,26 +86,35 @@ print("--- %s seconds ---" % (time.time() - start_time))
 
 ![firefox_o7qXWXY9p4](https://github.com/user-attachments/assets/b913a4a8-2543-4ad0-8d19-c90446ca3ea4)
 
+  
     # 7. Cache the the temporary table home_sales.
 spark.catalog.cacheTable("home_sales")
+
 
     # 8. Check if the table is cached.
 spark.catalog.isCached('home_sales')
  
+  
     Using the cached data, run the last query that calculates the average price of a home per "view" rating having an average home price greater than or equal to $350,000. Determine the runtime and compare it to uncached runtime.
 
+  
     # 10. Partition by the "date_built" field on the formatted parquet home sales data
 df.write.partitionBy("date_built").mode("overwrite").parquet("home_sales_partitioned")
 
+  
     # 11. Read the parquet formatted data.
 parquet_df = spark.read.parquet("home_sales_partitioned")
     
+  
     # 12. Create a temporary table for the parquet data.
 parquet_df.createOrReplaceTempView("home_sales_parquet")
 
     
 
+
     Run the last query that calculates the average price of a home per "view" rating having an average home price greater than or equal to $350,000. Determine the runtime and compare it to uncached runtime.
+
+
 
 
 
