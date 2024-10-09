@@ -88,7 +88,27 @@ spark.catalog.cacheTable("home_sales")
 spark.catalog.isCached('home_sales')
  
   
-    # 8. Using the cached data, run the last query that calculates the average price of a home per "view" rating having an average home price greater than or equal to $350,000. Determine the runtime and compare it to uncached runtime.
+    # 8. Using the cached data, run the last query that calculates the average price of a home per "view" rating having an average home price greater            than or equal to $350,000. Determine the runtime and compare it to uncached runtime.
+avg_price_view = spark.sql("""
+    SELECT view, ROUND(AVG(price), 2) AS avg_price
+    FROM home_sales
+    GROUP BY view
+    HAVING AVG(price) >= 350000
+    ORDER BY view DESC
+    """)
+
+avg_price_view.show()
+start_time = time.time()
+
+
+
+print("--- %s seconds ---" % (time.time() - start_time))
+
+ 
+![image](https://github.com/user-attachments/assets/9e0cdf6a-75e5-401f-8700-23b5d0e1cc02)
+
+
+
 
   
     # 9. Partition by the "date_built" field on the formatted parquet home sales data
