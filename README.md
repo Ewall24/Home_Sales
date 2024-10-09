@@ -80,15 +80,15 @@ print("--- %s seconds ---" % (time.time() - start_time))
 ![firefox_o7qXWXY9p4](https://github.com/user-attachments/assets/b913a4a8-2543-4ad0-8d19-c90446ca3ea4)
 
   
-    # 6. Cache the the temporary table home_sales.
+    # Cache the the temporary table home_sales.
 spark.catalog.cacheTable("home_sales")
 
 
-    # 7. Check if the table is cached.
+    # Check if the table is cached.
 spark.catalog.isCached('home_sales')
  
   
-    # 8. Using the cached data, run the last query that calculates the average price of a home per "view" rating having an average home price greater            than or equal to $350,000. Determine the runtime and compare it to uncached runtime.
+    # Using the cached data, run the last query that calculates the average price of a home per "view" rating having an average home price greater            than or equal to $350,000. Determine the runtime and compare it to uncached runtime.
 avg_price_view = spark.sql("""
     SELECT view, ROUND(AVG(price), 2) AS avg_price
     FROM home_sales
@@ -111,7 +111,7 @@ print("--- %s seconds ---" % (time.time() - start_time))
 
 
   
-    # 9. Partition by the "date_built" field on the formatted parquet home sales data
+    # Partition by the "date_built" field on the formatted parquet home sales data
 df.write.partitionBy("date_built").mode("overwrite").parquet("home_sales_partitioned")
     
      Read the parquet formatted data.
@@ -121,16 +121,18 @@ parquet_df = spark.read.parquet("home_sales_partitioned")
     # 10. Create a temporary table for the parquet data.
 parquet_df.createOrReplaceTempView("home_sales_parquet")
 
-    # 11. Run the last query that calculates the average price of a home per "view" rating having an average home price greater than or equal to $350,000. Determine the runtime and compare it to uncached runtime.
-
-    # 12. Uncache the home_sales temporary table.
+    # 11. Run the last query that calculates the average price of a home per "view" rating having
+          an average home price greater than or equal to $350,000. 
+          Determine the runtime and compare it to uncached runtime.
+                                  
+    # Uncache the home_sales temporary table.
 spark.catalog.uncacheTable("home_sales")    
 
-    # 13. Check if the home_sales is no longer cached
+    # Check if the home_sales is no longer cached
 spark.catalog.isCached("home_sales")
 
 ![firefox_KhUjgdvCB9](https://github.com/user-attachments/assets/899ef3b9-e1eb-4864-8111-f08f091a6b45)
 
-    #14. Download your Home_Sales.ipynb file and upload it into your "Home_Sales" GitHub repository.
+    # Download your Home_Sales.ipynb file and upload it into your "Home_Sales" GitHub repository.
 
     
