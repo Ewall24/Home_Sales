@@ -64,11 +64,6 @@ avg_price_4_bedroom.show()
 
 
 
-
-
-![image](https://github.com/user-attachments/assets/2560c3d9-ed2a-4f3c-ad4c-5e0e43358d02)
-
-
         #What is the average price of a home for each year the home was built,
          that have 3 bedrooms and 3 bathrooms, rounded to two decimal places?                                                                                                                                                          
 avg_price_3_bed_3_bath = spark.sql("""
