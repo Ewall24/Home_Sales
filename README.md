@@ -6,6 +6,14 @@ Instructions
 
     Import the necessary PySpark SQL functions for this assignment.
 
+    # Set Environment Variables
+os.environ["JAVA_HOME"] = "/usr/lib/jvm/java-11-openjdk-amd64"
+os.environ["SPARK_HOME"] = f"/content/{spark_version}-bin-hadoop3"
+
+    # Start a SparkSession
+import findspark
+findspark.init()
+    Create a temporary table called home_sales.
     
     # Install Spark and Java
 !apt-get update
@@ -16,15 +24,28 @@ Instructions
 
     Read the home_sales_revised.csv data in the starter code into a Spark DataFrame.
 
+    #Read in the AWS S3 bucket into a DataFrame.
+from pyspark import SparkFiles
+url = "https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1.2/22-big-data/home_sales_revised.csv"
 
-    # Set Environment Variables
-os.environ["JAVA_HOME"] = "/usr/lib/jvm/java-11-openjdk-amd64"
-os.environ["SPARK_HOME"] = f"/content/{spark_version}-bin-hadoop3"
+    #Create a temporary view of the DataFrame.
+# Add the file to SparkFiles
+spark.sparkContext.addFile(url)
 
-    # Start a SparkSession
-import findspark
-findspark.init()
-    Create a temporary table called home_sales.
+    #Read the CSV file into a DataFrame
+df = spark.read.csv(SparkFiles.get("home_sales_revised.csv"), header=True, inferSchema=True)
+
+df.createOrReplaceTempView("home_sales")
+
+    #Verify that the view has been created by running a basic query
+spark.sql("SELECT * FROM home_sales LIMIT 5").show()
+
+
+
+![image](https://github.com/user-attachments/assets/fc9a73fb-486e-4dc0-abb8-94102bf9a7f8)
+
+
+
 
     Answer the following questions using SparkSQL:
 
