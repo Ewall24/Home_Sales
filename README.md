@@ -65,7 +65,27 @@ avg_price_4_bedroom.show()
 
 
         #What is the average price of a home for each year the home was built,
-         that have 3 bedrooms and 3 bathrooms, rounded to two decimal places?                                                                                                                                                          
+         that have 3 bedrooms and 3 bathrooms, rounded to two decimal places?    
+
+avg_price_3_bed_3_bath = spark.sql("""
+    SELECT date_built, ROUND(AVG(price), 2) AS avg_price
+    FROM home_sales
+    WHERE bedrooms = 3 AND bathrooms = 3
+    GROUP BY date_built
+    """)
+avg_price_3_bed_3_bath.show()
+
+
+![image](https://github.com/user-attachments/assets/773292cc-d920-4589-8d51-daf34d08c5a6)
+
+
+
+
+    #What is the average price of a home for each year the home was built,
+    # that have 3 bedrooms, 3 bathrooms, with two floors,
+    # and are greater than or equal to 2,000 square feet, rounded to two decimal places?
+
+
 avg_price_3_bed_3_bath = spark.sql("""
     SELECT date_built, ROUND(AVG(price), 2) AS avg_price
     FROM home_sales
