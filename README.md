@@ -24,20 +24,23 @@ findspark.init()
 
     Read the home_sales_revised.csv data in the starter code into a Spark DataFrame.
 
-    #Read in the AWS S3 bucket into a DataFrame.
+    # Read in the AWS S3 bucket into a DataFrame.
 from pyspark import SparkFiles
 url = "https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1.2/22-big-data/home_sales_revised.csv"
 
-    #Create a temporary view of the DataFrame.
-# Add the file to SparkFiles
+    # Create a temporary view of the DataFrame.
+    # Add the file to SparkFiles
+    
 spark.sparkContext.addFile(url)
 
-    #Read the CSV file into a DataFrame
+    # Read the CSV file into a DataFrame
+    
 df = spark.read.csv(SparkFiles.get("home_sales_revised.csv"), header=True, inferSchema=True)
 
 df.createOrReplaceTempView("home_sales")
 
-    #Verify that the view has been created by running a basic query
+    # Verify that the view has been created by running a basic query
+    
 spark.sql("SELECT * FROM home_sales LIMIT 5").show()
 
 
@@ -49,7 +52,7 @@ spark.sql("SELECT * FROM home_sales LIMIT 5").show()
 
     Answer the following questions using SparkSQL:
 
-        #What is the average price for a four bedroom house sold per year, rounded to two decimal places?
+        # What is the average price for a four bedroom house sold per year, rounded to two decimal places?
 avg_price_4_bedroom = spark.sql("""
     SELECT YEAR(date) AS year, ROUND(AVG(price), 2) AS avg_price
     FROM home_sales
@@ -64,7 +67,7 @@ avg_price_4_bedroom.show()
 
 
 
-        #What is the average price of a home for each year the home was built,
+        # What is the average price of a home for each year the home was built,
          that have 3 bedrooms and 3 bathrooms, rounded to two decimal places?    
 
 avg_price_3_bed_3_bath = spark.sql("""
@@ -81,9 +84,9 @@ avg_price_3_bed_3_bath.show()
 
 
 
-    #What is the average price of a home for each year the home was built,
-    # that have 3 bedrooms, 3 bathrooms, with two floors,
-    # and are greater than or equal to 2,000 square feet, rounded to two decimal places?
+    #  What is the average price of a home for each year the home was built,
+    #  that have 3 bedrooms, 3 bathrooms, with two floors,
+    #  and are greater than or equal to 2,000 square feet, rounded to two decimal places?
 
 
 avg_price_3_bed_3_bath = spark.sql("""
@@ -98,7 +101,7 @@ avg_price_3_bed_3_bath.show()
 
 
 
-    #What is the average price of a home per "view" rating, rounded to two decimal places,
+    # What is the average price of a home per "view" rating, rounded to two decimal places,
     # having an average home price greater than or equal to $350,000? Order by descending view rating.
     # Although this is a small dataset, determine the run time for this query.
 
@@ -155,16 +158,16 @@ print("--- %s seconds ---" % (time.time() - start_time))
     # Partition by the "date_built" field on the formatted parquet home sales data
 df.write.partitionBy("date_built").mode("overwrite").parquet("home_sales_partitioned")
     
-     Read the parquet formatted data.
+    # Read the parquet formatted data.
 parquet_df = spark.read.parquet("home_sales_partitioned")
     
   
-     Create a temporary table for the parquet data.
+    # Create a temporary table for the parquet data.
 parquet_df.createOrReplaceTempView("home_sales_parquet")
 
-     Using the parquet Dataframe,run the last query that calculates the average price of a home per "view" rating having
-          an average home price greater than or equal to $350,000. 
-          Determine the runtime and compare it to uncached runtime. 
+    # Using the parquet Dataframe,run the last query that calculates the average price of a home per "view" rating having
+     an average home price greater than or equal to $350,000.Determine the runtime and compare it to uncached runtime. 
+    
 
 avg_price_view = spark.sql("""
     SELECT view, ROUND(AVG(price), 2) AS avg_price
