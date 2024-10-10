@@ -123,6 +123,10 @@ spark.catalog.cacheTable("home_sales")
 
     # Check if the table is cached.
 spark.catalog.isCached('home_sales')
+
+ 
+![image](https://github.com/user-attachments/assets/81a00161-68cc-40b4-a6f4-73d04a462b00)
+
  
   
     # Using the cached data, run the last query that calculates the average price of a home per "view" rating having an average home price greater            than or equal to $350,000. Determine the runtime and compare it to uncached runtime.
