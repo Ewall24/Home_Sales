@@ -94,7 +94,8 @@ avg_price_3_bed_3_bath = spark.sql("""
     """)
 avg_price_3_bed_3_bath.show()
 
-![image](https://github.com/user-attachments/assets/1ffb0602-42bc-43df-8899-f7727d3aa3d1)
+![image](https://github.com/user-attachments/assets/55f3e85c-920e-4b71-8cfa-74d8fbb55ec4)
+
 
 
     #What is the average price of a home per "view" rating, rounded to two decimal places,
