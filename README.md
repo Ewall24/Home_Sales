@@ -159,12 +159,33 @@ df.write.partitionBy("date_built").mode("overwrite").parquet("home_sales_partiti
 parquet_df = spark.read.parquet("home_sales_partitioned")
     
   
-    # 10. Create a temporary table for the parquet data.
+     Create a temporary table for the parquet data.
 parquet_df.createOrReplaceTempView("home_sales_parquet")
 
-    # 11. Run the last query that calculates the average price of a home per "view" rating having
+     Using the parquet Dataframe,run the last query that calculates the average price of a home per "view" rating having
           an average home price greater than or equal to $350,000. 
-          Determine the runtime and compare it to uncached runtime.
+          Determine the runtime and compare it to uncached runtime. 
+
+avg_price_view = spark.sql("""
+    SELECT view, ROUND(AVG(price), 2) AS avg_price
+    FROM home_sales_parquet
+    GROUP BY view
+    HAVING AVG(price) >= 350000
+    ORDER BY view DESC
+    """)
+
+avg_price_view.show()
+start_time = time.time()
+
+
+
+print("--- %s seconds ---" % (time.time() - start_time))  
+
+
+![image](https://github.com/user-attachments/assets/94d4636b-6847-4bfe-a8d5-070f917d351d)
+
+
+          
                                   
     # Uncache the home_sales temporary table.
 spark.catalog.uncacheTable("home_sales")    
